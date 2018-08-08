@@ -82,9 +82,9 @@ public class IFloatWindowImpl extends IFloatWindow {
 
             @Override
             public void onBackToDesktop() {
-//                if (!mB.mDesktopShow) {
-//                    hide();
-//                }
+                if (!mB.mDesktopShow) {
+                    hide();
+                }
                 if (mB.mViewStateListener != null) {
                     mB.mViewStateListener.onBackToDesktop();
                 }

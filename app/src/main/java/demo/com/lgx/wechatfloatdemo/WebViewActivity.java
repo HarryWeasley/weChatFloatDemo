@@ -82,6 +82,7 @@ public class WebViewActivity extends AppCompatActivity{
 //                .setHeight(Screen.width, 0.2f)
                     .setMoveType(MoveType.slide, 15, 15)
                     .setWidth(50)
+                    .setFilter(false,WebViewActivity.class)
                     .setHeight(50)
                     .setX(Screen.width, 0.8f)  //设置控件初始位置
                     .setY(Screen.height, 0.2f)
