@@ -13,5 +13,4 @@ interface LifecycleListener {
 
     void onBackToDesktop();
 
-    void onHome();
 }

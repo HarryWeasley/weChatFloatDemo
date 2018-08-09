@@ -25,7 +25,7 @@ import com.yhao.floatwindow.Screen;
  * desc:
  */
 
-public class WebViewActivity extends AppCompatActivity{
+public class WebViewActivity extends BaseActivity{
 
     private ProgressBar progressBar;
     private String url="https://blog.csdn.net/HarryWeasley/article/details/51955467";
@@ -68,8 +68,6 @@ public class WebViewActivity extends AppCompatActivity{
     public void onBackPressed() {
         super.onBackPressed();
         Toast.makeText(this,"点击了",Toast.LENGTH_SHORT).show();
-
-
         IFloatWindow old = FloatWindow.get("old");
         if (old == null) {
             ImageView imageView=new ImageView(this);
@@ -82,7 +80,7 @@ public class WebViewActivity extends AppCompatActivity{
 //                .setHeight(Screen.width, 0.2f)
                     .setMoveType(MoveType.slide, 15, 15)
                     .setWidth(50)
-                    .setFilter(false,WebViewActivity.class)
+//                    .setFilter(false,WebViewActivity.class)
                     .setHeight(50)
                     .setX(Screen.width, 0.8f)  //设置控件初始位置
                     .setY(Screen.height, 0.2f)

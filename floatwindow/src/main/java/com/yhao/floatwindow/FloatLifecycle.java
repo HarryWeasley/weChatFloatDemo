@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -38,6 +39,8 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
     FloatLifecycle(Context applicationContext, boolean showFlag, Class[] activities, LifecycleListener lifecycleListener) {
         this.showFlag = showFlag;
         this.activities = activities;
+        startCount=ActivityStack.getInstance().getSize()-2;
+        resumeCount=ActivityStack.getInstance().getSize()-2;
         num++;
         mLifecycleListener = lifecycleListener;
         mHandler = new Handler();
@@ -99,9 +102,6 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
 
     @Override
     public void onActivityStarted(Activity activity) {
-        if(resumeCount<0){
-            resumeCount=0;
-        }
         startCount++;
     }
 
@@ -120,7 +120,7 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
         if (action != null && action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
             String reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY);
             if (SYSTEM_DIALOG_REASON_HOME_KEY.equals(reason)) {
-                mLifecycleListener.onHome();
+                mLifecycleListener.onBackToDesktop();
             }
         }
     }
