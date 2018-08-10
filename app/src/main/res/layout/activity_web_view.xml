@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<demo.com.lgx.wechatfloatdemo.weghit.MyFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/parent"
     tools:context="demo.com.lgx.wechatfloatdemo.MainActivity">
 
-    <WebView
-        android:id="@+id/web_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/progress"
@@ -32,4 +25,23 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+
+    <demo.com.lgx.wechatfloatdemo.weghit.MyWebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:visibility="invisible"
+        android:layout_height="match_parent"
+        />
+
+
+    <demo.com.lgx.wechatfloatdemo.weghit.CornersWebView
+        android:id="@+id/web_view2"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="match_parent"
+        />
+
+
+
+</demo.com.lgx.wechatfloatdemo.weghit.MyFrameLayout>

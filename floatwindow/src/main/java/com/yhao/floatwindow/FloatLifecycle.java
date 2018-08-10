@@ -39,8 +39,14 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
     FloatLifecycle(Context applicationContext, boolean showFlag, Class[] activities, LifecycleListener lifecycleListener) {
         this.showFlag = showFlag;
         this.activities = activities;
-        startCount=ActivityStack.getInstance().getSize()-2;
-        resumeCount=ActivityStack.getInstance().getSize()-2;
+        startCount = ActivityStack.getInstance().getSize() - 2;
+        resumeCount = ActivityStack.getInstance().getSize() - 2;
+        if (startCount < 0) {
+            startCount = 0;
+        }
+        if (resumeCount < 0) {
+            resumeCount = 0;
+        }
         num++;
         mLifecycleListener = lifecycleListener;
         mHandler = new Handler();
