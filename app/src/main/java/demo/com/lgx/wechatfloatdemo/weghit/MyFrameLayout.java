@@ -65,8 +65,9 @@ public class MyFrameLayout extends FrameLayout {
             canvas.clipRect(mRectF);
             canvas.drawRoundRect(mRectF, radius, radius, mPaint);
         }
-
         super.onDraw(canvas);
+
+
     }
 
 

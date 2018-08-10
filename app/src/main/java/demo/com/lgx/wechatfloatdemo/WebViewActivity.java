@@ -47,9 +47,9 @@ public class WebViewActivity extends BaseActivity {
             }
         });
 
-        webView2.getSettings().setJavaScriptEnabled(true);
-        webView2.loadUrl(url);
-        webView2.setWebViewClient(new WebViewClient() {
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl(url);
+        webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -94,7 +94,8 @@ public class WebViewActivity extends BaseActivity {
 //
 //        }
 
-        webView.startAnimation(0, frameLayout.getWidth() - 150, 0, frameLayout.getHeight() / 2, 0, 75);
+        frameLayout.startAnimation(0, frameLayout.getWidth() - 150, 0, frameLayout.getHeight() / 2, 0, 75);
+//        webView.startAnimation(0, webView.getWidth() - 150, 0, webView.getHeight() / 2, 0, 75);
 //        frameLayout.setScaleCircleListener(new MyFrameLayout.ScaleCircleListener() {
 //            @Override
 //            public void onAnimationEnd() {
