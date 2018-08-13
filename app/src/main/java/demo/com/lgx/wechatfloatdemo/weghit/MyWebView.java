@@ -14,8 +14,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
-
-import com.tencent.smtt.sdk.WebView;
+import android.webkit.WebView;
 
 /**
  * Created by Harry on 2018/8/9.
@@ -44,6 +43,8 @@ public class MyWebView extends WebView {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+//        setBackgroundColor(0);
         if (mPaint == null) {
             mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mPaint.setDither(true);
@@ -63,14 +64,15 @@ public class MyWebView extends WebView {
             float radius = scaleCircleAnimation.getRadius();
             Log.i("radius", "radius=" + radius + "left=" + left + "right=" + right + "top=" + top + "bottom=" + bottom);
             mRectF.set(left, top, right, bottom);
-//            canvas.clipRect(mRectF);
+            canvas.clipRect(mRectF);
 //            canvas.drawRoundRect(mRectF, radius, radius, mPaint);
             mPath.setFillType(Path.FillType.INVERSE_WINDING);
             mPath.addRoundRect(mRectF,radius,radius,Path.Direction.CW);
             canvas.drawPath(mPath,createPorterDuffClearPaint());
         }
 
-        super.onDraw(canvas);
+
+//        setBackgroundColor(0);
     }
 
     private Paint poterPaint;

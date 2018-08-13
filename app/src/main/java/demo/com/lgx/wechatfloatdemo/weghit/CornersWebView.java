@@ -1,10 +1,6 @@
 package demo.com.lgx.wechatfloatdemo.weghit;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.TypeEvaluator;
-import android.animation.ValueAnimator;
+
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,8 +10,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
-
-import com.tencent.smtt.sdk.WebView;
+import android.webkit.WebView;
 /**
  * 圆角webview
  */

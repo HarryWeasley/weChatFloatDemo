@@ -28,20 +28,23 @@ import java.util.function.ToDoubleFunction;
 
 public class MyFrameLayout extends FrameLayout {
     private RectF mRectF;
-    private ScaleCircleAnimation scaleCircleAnimation;
+    private ScaleCircleAnimation scaleCircleAnimation=new ScaleCircleAnimation(0,0,5);
     private Paint mPaint;
     private ScaleCircleListener listener;
 
     public MyFrameLayout(Context context) {
         super(context);
+        setWillNotDraw(false);
     }
 
     public MyFrameLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setWillNotDraw(false);
     }
 
     public MyFrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setWillNotDraw(false);
     }
 
 
@@ -63,17 +66,17 @@ public class MyFrameLayout extends FrameLayout {
             Log.i("radius", "radius=" + radius + "left=" + left + "right=" + right + "top=" + top + "bottom=" + bottom);
             mRectF.set(left, top, right, bottom);
             canvas.clipRect(mRectF);
+
+//            setPadding(left, top, right, bottom);
             canvas.drawRoundRect(mRectF, radius, radius, mPaint);
         }
         super.onDraw(canvas);
-
-
     }
 
 
     public void startAnimation(int fromX, int toX, int fromY, int toY, int fromRadius, int toRadius) {
         //默认不执行onDraw方法
-        setWillNotDraw(false);
+
         ValueAnimator valueAnimator = new ValueAnimator();
         valueAnimator.setObjectValues(new ScaleCircleAnimation(fromX, fromY, fromRadius),
                 new ScaleCircleAnimation(toX, toY, toRadius));

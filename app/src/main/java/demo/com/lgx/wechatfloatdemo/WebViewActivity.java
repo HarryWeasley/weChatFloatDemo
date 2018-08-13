@@ -2,19 +2,14 @@ package demo.com.lgx.wechatfloatdemo;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
-
-import org.w3c.dom.Text;
-
-import demo.com.lgx.wechatfloatdemo.weghit.CornersWebView;
 import demo.com.lgx.wechatfloatdemo.weghit.MyFrameLayout;
-import demo.com.lgx.wechatfloatdemo.weghit.MyWebView;
+import demo.com.lgx.wechatfloatdemo.weghit.MyWebView2;
 
 
 /**
@@ -28,8 +23,7 @@ public class WebViewActivity extends BaseActivity {
     private String url = "https://blog.csdn.net/HarryWeasley/article/details/51955467";
     //    private String url="https://www.baidu.com";
     private MyFrameLayout frameLayout;
-    private MyWebView webView;
-    private CornersWebView webView2;
+    private MyWebView2 webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +32,6 @@ public class WebViewActivity extends BaseActivity {
         frameLayout = findViewById(R.id.parent);
         progressBar = findViewById(R.id.progress);
         webView = findViewById(R.id.web_view);
-        webView2=findViewById(R.id.web_view2);
         Button back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +41,7 @@ public class WebViewActivity extends BaseActivity {
         });
 
         webView.getSettings().setJavaScriptEnabled(true);
+        webView. getSettings().setUseWideViewPort(true);
         webView.loadUrl(url);
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -94,7 +88,7 @@ public class WebViewActivity extends BaseActivity {
 //
 //        }
 
-        frameLayout.startAnimation(0, frameLayout.getWidth() - 150, 0, frameLayout.getHeight() / 2, 0, 75);
+//        frameLayout.startAnimation(0, frameLayout.getWidth() - 150, 0, frameLayout.getHeight() / 2, 0, 75);
 //        webView.startAnimation(0, webView.getWidth() - 150, 0, webView.getHeight() / 2, 0, 75);
 //        frameLayout.setScaleCircleListener(new MyFrameLayout.ScaleCircleListener() {
 //            @Override

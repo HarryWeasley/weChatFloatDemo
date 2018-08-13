@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     android:id="@+id/parent"
     tools:context="demo.com.lgx.wechatfloatdemo.MainActivity">
 
@@ -34,19 +35,18 @@
 
 
     <demo.com.lgx.wechatfloatdemo.weghit.MyWebView
-        android:id="@+id/web_view"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:padding="10dp"
-        android:visibility="invisible"
         android:layout_height="match_parent"
         />
 
 
-    <demo.com.lgx.wechatfloatdemo.weghit.CornersWebView
-        android:id="@+id/web_view2"
+    <demo.com.lgx.wechatfloatdemo.weghit.MyWebView2
+        android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:padding="10dp"
-        android:visibility="invisible"
+
         android:layout_height="match_parent"
         />
 
