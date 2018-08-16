@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<demo.com.lgx.wechatfloatdemo.weghit.MyFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    android:id="@+id/parent"
     tools:context="demo.com.lgx.wechatfloatdemo.MainActivity">
-
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="vertical">
+
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="50dp"
+            android:layout_height="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="50dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/back"
@@ -33,23 +32,18 @@
     </LinearLayout>
 
 
-
-    <demo.com.lgx.wechatfloatdemo.weghit.MyWebView
-        android:visibility="invisible"
+    <demo.com.lgx.wechatfloatdemo.weghit.ScaleCircleImageView
+        android:id="@+id/parent"
         android:layout_width="match_parent"
-        android:padding="10dp"
         android:layout_height="match_parent"
-        />
+       />
 
 
-    <demo.com.lgx.wechatfloatdemo.weghit.MyWebView2
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/web_view"
-        android:layout_width="match_parent"
-        android:padding="10dp"
-
-        android:layout_height="match_parent"
-        />
+       />
 
 
-
-</demo.com.lgx.wechatfloatdemo.weghit.MyFrameLayout>
+</FrameLayout>

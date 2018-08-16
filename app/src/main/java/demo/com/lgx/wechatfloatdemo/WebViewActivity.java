@@ -1,15 +1,17 @@
 package demo.com.lgx.wechatfloatdemo;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import demo.com.lgx.wechatfloatdemo.weghit.MyFrameLayout;
-import demo.com.lgx.wechatfloatdemo.weghit.MyWebView2;
+import demo.com.lgx.wechatfloatdemo.weghit.ScaleCircleImageView;
 
 
 /**
@@ -20,10 +22,16 @@ import demo.com.lgx.wechatfloatdemo.weghit.MyWebView2;
 public class WebViewActivity extends BaseActivity {
 
     private ProgressBar progressBar;
-    private String url = "https://blog.csdn.net/HarryWeasley/article/details/51955467";
-    //    private String url="https://www.baidu.com";
-    private MyFrameLayout frameLayout;
-    private MyWebView2 webView;
+    //    private String url = "https://blog.csdn.net/HarryWeasley/article/details/51955467";
+//    private String url="http://m.ocj.com.cn/tvLive01?visitorID=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIhdmlzaXRvciEtYmFmMmZhZWEtZWMyMS00OTVjLTk5Nj" +
+//        "AtMDc2NDk4NzZlYmU5IiwiaXNzIjoib2NqLXN0YXJza3kiLCJleHAiOjE1NDIwMjc0NjYsImlhdCI6MTUzNDI1MTQ2Nn0.bKWiSgvLanAoDDcQ5OhgeYaOqbHkLT5lVZ_Emp4IsHo";
+//    private String url="https://ocj-h5.ocj.com.cn/shopllMobile/shopllMobileappIndex.html";
+//    private String url="https://ocj-test5.ocj.com.cn/shopllMobile/shopllMobileappIndex.html";
+//    private String url="https://gitbook.cn/";
+    private String url = "https://www.baidu.com";
+    private ScaleCircleImageView frameLayout;
+    private WebView webView;
+    private FrameLayout parent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,7 @@ public class WebViewActivity extends BaseActivity {
         frameLayout = findViewById(R.id.parent);
         progressBar = findViewById(R.id.progress);
         webView = findViewById(R.id.web_view);
+        parent=findViewById(R.id.frame_layout);
         Button back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +50,7 @@ public class WebViewActivity extends BaseActivity {
         });
 
         webView.getSettings().setJavaScriptEnabled(true);
-        webView. getSettings().setUseWideViewPort(true);
+        webView.getSettings().setUseWideViewPort(true);
         webView.loadUrl(url);
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -88,7 +97,14 @@ public class WebViewActivity extends BaseActivity {
 //
 //        }
 
-//        frameLayout.startAnimation(0, frameLayout.getWidth() - 150, 0, frameLayout.getHeight() / 2, 0, 75);
+        View view = webView;
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        frameLayout.startAnimation(0, frameLayout.getWidth() - 150, 0, frameLayout.getHeight() / 2, 0, 75, bitmap);
+        webView.setVisibility(View.INVISIBLE);
+
+
 //        webView.startAnimation(0, webView.getWidth() - 150, 0, webView.getHeight() / 2, 0, 75);
 //        frameLayout.setScaleCircleListener(new MyFrameLayout.ScaleCircleListener() {
 //            @Override

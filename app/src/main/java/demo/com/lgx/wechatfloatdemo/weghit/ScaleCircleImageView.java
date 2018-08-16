@@ -5,100 +5,84 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import android.graphics.Xfermode;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.webkit.WebView;
 
 /**
  * Created by Harry on 2018/8/9.
  * desc:
  */
 
-public class MyWebView extends WebView {
+public class ScaleCircleImageView extends AppCompatImageView {
     private RectF mRectF;
-    private Path mPath;
     private ScaleCircleAnimation scaleCircleAnimation;
     private Paint mPaint;
     private ScaleCircleListener listener;
+    Bitmap src;
+    private Xfermode xfermode;
 
-    public MyWebView(Context context) {
+    public ScaleCircleImageView(Context context) {
         super(context);
+        setWillNotDraw(false);
     }
 
-    public MyWebView(Context context, AttributeSet attrs) {
+    public ScaleCircleImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setWillNotDraw(false);
     }
 
-    public MyWebView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ScaleCircleImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setWillNotDraw(false);
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-//        setBackgroundColor(0);
         if (mPaint == null) {
             mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
             mPaint.setDither(true);
         }
         if (mRectF == null) {
             mRectF = new RectF();
         }
-        if(mPath==null){
-            mPath=new Path();
-
+        if (xfermode == null) {
+            xfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
         }
         if (scaleCircleAnimation != null) {
+            setLayerType(LAYER_TYPE_SOFTWARE, null); //关闭硬件加速
+
             int left = scaleCircleAnimation.getX();
             int top = getTop() + scaleCircleAnimation.getY();
             int right = getWidth();
             int bottom = getBottom() - scaleCircleAnimation.getY() + 150;
             float radius = scaleCircleAnimation.getRadius();
-            Log.i("radius", "radius=" + radius + "left=" + left + "right=" + right + "top=" + top + "bottom=" + bottom);
             mRectF.set(left, top, right, bottom);
             canvas.clipRect(mRectF);
-//            canvas.drawRoundRect(mRectF, radius, radius, mPaint);
-            mPath.setFillType(Path.FillType.INVERSE_WINDING);
-            mPath.addRoundRect(mRectF,radius,radius,Path.Direction.CW);
-            canvas.drawPath(mPath,createPorterDuffClearPaint());
+            canvas.drawRoundRect(mRectF, radius, radius, mPaint);
+            //设置Xfermode
+            mPaint.setXfermode(xfermode);
+
+            //源图
+            canvas.drawBitmap(src, 0, 0, mPaint);
+
+            //还原Xfermode
+            mPaint.setXfermode(null);
         }
-
-
-//        setBackgroundColor(0);
     }
 
-    private Paint poterPaint;
+    public void startAnimation(int fromX, int toX, int fromY, int toY, int fromRadius, int toRadius, Bitmap bitmap) {
+        src = bitmap;
+        //默认不执行onDraw方法
 
-    private Paint createPorterDuffClearPaint()
-    {
-        if(poterPaint==null){
-            Paint paint = new Paint();
-
-            paint.setColor(Color.TRANSPARENT);
-
-            paint.setStyle(Paint.Style.FILL);
-
-            paint.setAntiAlias(true);
-
-            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-
-            return paint;
-        }else{
-            return poterPaint;
-        }
-
-    }
-
-
-    public void startAnimation(int fromX, int toX, int fromY, int toY, int fromRadius, int toRadius) {
         ValueAnimator valueAnimator = new ValueAnimator();
         valueAnimator.setObjectValues(new ScaleCircleAnimation(fromX, fromY, fromRadius),
                 new ScaleCircleAnimation(toX, toY, toRadius));
@@ -111,7 +95,7 @@ public class MyWebView extends WebView {
                 return new ScaleCircleAnimation(x, y, radius);
             }
         });
-        valueAnimator.setDuration(5000);
+        valueAnimator.setDuration(500);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
