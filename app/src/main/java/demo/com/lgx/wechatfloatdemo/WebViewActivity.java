@@ -3,7 +3,6 @@ package demo.com.lgx.wechatfloatdemo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.webkit.WebView;
@@ -48,7 +47,7 @@ public class WebViewActivity extends BaseActivity {
         frameLayout = findViewById(R.id.parent);
         progressBar = findViewById(R.id.progress);
         webView = findViewById(R.id.web_view);
-        parent=findViewById(R.id.frame_layout);
+        parent = findViewById(R.id.frame_layout);
         Button back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,10 +93,10 @@ public class WebViewActivity extends BaseActivity {
 //                .setHeight(Screen.width, 0.2f)
                     .setMoveType(MoveType.slide, 0, 0)
                     .setWidth(75)
-                    .setFilter(false,WebViewActivity.class)
+                    .setFilter(false, WebViewActivity.class)
                     .setHeight(75)
                     .setX(Screen.width, 0.8f)  //设置控件初始位置
-                    .setY(parent.getHeight()/3)
+                    .setY(parent.getHeight() / 3)
                     .setMoveStyle(300, new AccelerateInterpolator())
                     .setDesktopShow(false)
                     .build();
@@ -107,8 +106,19 @@ public class WebViewActivity extends BaseActivity {
             view.draw(canvas);
 //            frameLayout.startAnimation(0, frameLayout.getWidth() - 150, 0, frameLayout.getHeight() / 2, 0, 75, bitmap);
             old = FloatWindow.get("old");
-            Log.i("radius","parent==="+parent.getHeight()+"  "+parent.getWidth()+""+webView.getHeight());
-            frameLayout.startAnimation(0, old.getmB().xOffset, 0, old.getmB().yOffset, 0, old.getmB().mWidth/2, bitmap,old.getmB().mWidth);
+            frameLayout
+                    .createAnmiationParam()
+                    .setFromLeftX(0)
+                    .setToLeftX(old.getmB().xOffset)
+                    .setFromRightX(parent.getWidth())
+                    .setToRightX(old.getmB().xOffset + old.getmB().mWidth)
+                    .setFromTopY(0)
+                    .setToTopY(old.getmB().yOffset)
+                    .setFromBottomY(parent.getHeight())
+                    .setFromRadius(0)
+                    .setToRadius(old.getmB().mWidth / 2)
+                    .setToBottomY(old.getmB().yOffset + old.getmB().mWidth);
+            frameLayout.startAnimation(bitmap, old.getmB().mWidth);
             webView.setVisibility(View.GONE);
             frameLayout.setScaleCircleListener(new ScaleCircleImageView.ScaleCircleListener() {
                 @Override

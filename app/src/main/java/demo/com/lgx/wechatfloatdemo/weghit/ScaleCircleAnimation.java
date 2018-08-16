@@ -6,28 +6,56 @@ package demo.com.lgx.wechatfloatdemo.weghit;
  */
 
 public class ScaleCircleAnimation {
-   private int x;
-    private int y;
     private  float radius;
+    private int leftX,rightX;
+    private int topY,bottomY;
 
 
-    public ScaleCircleAnimation(int x,int y,float radius){
-        this.x=x;
-        this.y=y;
+    public ScaleCircleAnimation(int leftX,int rightX,int topY,int bottomY,float radius){
+        this.leftX=leftX;
+        this.rightX=rightX;
+        this.topY=topY;
+        this.bottomY=bottomY;
         this.radius=radius;
     }
 
-    public int getX() {
-        return x;
-    }
-
-
-    public int getY() {
-        return y;
-    }
-
-
     public float getRadius() {
         return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+
+    public int getLeftX() {
+        return leftX;
+    }
+
+    public void setLeftX(int leftX) {
+        this.leftX = leftX;
+    }
+
+    public int getRightX() {
+        return rightX;
+    }
+
+    public void setRightX(int rightX) {
+        this.rightX = rightX;
+    }
+
+    public int getTopY() {
+        return topY;
+    }
+
+    public void setTopY(int topY) {
+        this.topY = topY;
+    }
+
+    public int getBottomY() {
+        return bottomY;
+    }
+
+    public void setBottomY(int bottomY) {
+        this.bottomY = bottomY;
     }
 }
