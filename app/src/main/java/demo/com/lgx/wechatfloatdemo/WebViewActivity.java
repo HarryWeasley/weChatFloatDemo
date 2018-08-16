@@ -3,13 +3,21 @@ package demo.com.lgx.wechatfloatdemo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.yhao.floatwindow.FloatWindow;
+import com.yhao.floatwindow.IFloatWindow;
+import com.yhao.floatwindow.MoveType;
+import com.yhao.floatwindow.Screen;
 
 import demo.com.lgx.wechatfloatdemo.weghit.ScaleCircleImageView;
 
@@ -74,45 +82,42 @@ public class WebViewActivity extends BaseActivity {
     public void onBackPressed() {
 
         Toast.makeText(this, "点击了", Toast.LENGTH_SHORT).show();
-//        IFloatWindow old = FloatWindow.get("old");
-//        if (old == null) {
-//            ImageView imageView = new ImageView(this);
-//            imageView.setBackgroundResource(R.mipmap.ic_launcher_round);
-//            FloatWindow
-//                    .with(getApplicationContext())
-//                    .setTag("old")
-//                    .setView(imageView)
-////                .setWidth(Screen.width, 0.2f) //设置悬浮控件宽高
-////                .setHeight(Screen.width, 0.2f)
-//                    .setMoveType(MoveType.slide, 15, 15)
-//                    .setWidth(50)
-////                    .setFilter(false,WebViewActivity.class)
-//                    .setHeight(50)
-//                    .setX(Screen.width, 0.8f)  //设置控件初始位置
-//                    .setY(Screen.height, 0.5f)
-//                    .setMoveStyle(300, new AccelerateInterpolator())
-//                    .setDesktopShow(false)
-//                    .build();
-//        } else {
-//
-//        }
+        IFloatWindow old = FloatWindow.get("old");
+        if (old == null) {
+            ImageView imageView = new ImageView(this);
+            imageView.setBackgroundResource(R.mipmap.ic_launcher_round);
+            FloatWindow
+                    .with(getApplicationContext())
+                    .setTag("old")
+                    .setView(imageView)
+//                .setWidth(Screen.width, 0.2f) //设置悬浮控件宽高
+//                .setHeight(Screen.width, 0.2f)
+                    .setMoveType(MoveType.slide, 0, 0)
+                    .setWidth(75)
+                    .setFilter(false,WebViewActivity.class)
+                    .setHeight(75)
+                    .setX(Screen.width, 0.8f)  //设置控件初始位置
+                    .setY(parent.getHeight()/3)
+                    .setMoveStyle(300, new AccelerateInterpolator())
+                    .setDesktopShow(false)
+                    .build();
+            View view = parent;
+            Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            view.draw(canvas);
+//            frameLayout.startAnimation(0, frameLayout.getWidth() - 150, 0, frameLayout.getHeight() / 2, 0, 75, bitmap);
+            old = FloatWindow.get("old");
+            Log.i("radius","parent==="+parent.getHeight()+"  "+parent.getWidth()+""+webView.getHeight());
+            frameLayout.startAnimation(0, old.getmB().xOffset, 0, old.getmB().yOffset, 0, old.getmB().mWidth/2, bitmap,old.getmB().mWidth);
+            webView.setVisibility(View.GONE);
+            frameLayout.setScaleCircleListener(new ScaleCircleImageView.ScaleCircleListener() {
+                @Override
+                public void onAnimationEnd() {
+                    finish();
+                }
 
-        View view = webView;
-        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        view.draw(canvas);
-        frameLayout.startAnimation(0, frameLayout.getWidth() - 150, 0, frameLayout.getHeight() / 2, 0, 75, bitmap);
-        webView.setVisibility(View.INVISIBLE);
-
-
-//        webView.startAnimation(0, webView.getWidth() - 150, 0, webView.getHeight() / 2, 0, 75);
-//        frameLayout.setScaleCircleListener(new MyFrameLayout.ScaleCircleListener() {
-//            @Override
-//            public void onAnimationEnd() {
-////                finish();
-//            }
-//        });
-
+            });
+        }
 
     }
 }

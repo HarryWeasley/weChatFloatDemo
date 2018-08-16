@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Created by yhao on 17-12-1.
@@ -39,14 +37,15 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
     FloatLifecycle(Context applicationContext, boolean showFlag, Class[] activities, LifecycleListener lifecycleListener) {
         this.showFlag = showFlag;
         this.activities = activities;
-        startCount = ActivityStack.getInstance().getSize() - 2;
-        resumeCount = ActivityStack.getInstance().getSize() - 2;
-        if (startCount < 0) {
-            startCount = 0;
-        }
-        if (resumeCount < 0) {
-            resumeCount = 0;
-        }
+        startCount = ActivityStack.getInstance().getSize() - 1;
+        resumeCount = ActivityStack.getInstance().getSize() - 1;
+//        if (startCount < 0) {
+//            startCount = 0;
+//        }
+//        if (resumeCount < 0) {
+//            resumeCount = 0;
+//        }
+        LogUtil.e("初始化第一次 resumeCount="+resumeCount+"   "+"  startCount="+startCount);
         num++;
         mLifecycleListener = lifecycleListener;
         mHandler = new Handler();
@@ -81,6 +80,7 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
             }
         }
         resumeCount++;
+        LogUtil.e("onActivityResumed resumeCount="+resumeCount+"   "+activity);
         if (needShow(activity)) {
             mLifecycleListener.onShow();
         } else {
@@ -94,6 +94,7 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
     @Override
     public void onActivityPaused(final Activity activity) {
         resumeCount--;
+        LogUtil.e("onActivityPaused resumeCount="+resumeCount+"   "+activity);
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -109,12 +110,14 @@ class FloatLifecycle extends BroadcastReceiver implements Application.ActivityLi
     @Override
     public void onActivityStarted(Activity activity) {
         startCount++;
+        LogUtil.e("onActivityStarted startCount="+startCount+"   "+activity);
     }
 
 
     @Override
     public void onActivityStopped(Activity activity) {
         startCount--;
+        LogUtil.e("onActivityStopped startCount="+startCount+"   "+activity);
         if (startCount == 0) {
             mLifecycleListener.onBackToDesktop();
         }

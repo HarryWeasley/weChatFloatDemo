@@ -14,6 +14,7 @@ import android.graphics.RectF;
 import android.graphics.Xfermode;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.Log;
 
 /**
  * Created by Harry on 2018/8/9.
@@ -46,9 +47,10 @@ public class ScaleCircleImageView extends AppCompatImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        Log.i("scale", "onDraw执行了");
+        super.onDraw(canvas);
         if (mPaint == null) {
             mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
             mPaint.setDither(true);
         }
         if (mRectF == null) {
@@ -58,30 +60,36 @@ public class ScaleCircleImageView extends AppCompatImageView {
             xfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
         }
         if (scaleCircleAnimation != null) {
-            setLayerType(LAYER_TYPE_SOFTWARE, null); //关闭硬件加速
+//            setLayerType(LAYER_TYPE_SOFTWARE, null); //关闭硬件加速
 
             int left = scaleCircleAnimation.getX();
             int top = getTop() + scaleCircleAnimation.getY();
             int right = getWidth();
-            int bottom = getBottom() - scaleCircleAnimation.getY() + 150;
+            int bottom = getBottom() - scaleCircleAnimation.getY() + width ;
             float radius = scaleCircleAnimation.getRadius();
             mRectF.set(left, top, right, bottom);
-            canvas.clipRect(mRectF);
+            Log.i("radius", "left=    " + left + "     right=" + right + "   top=" + top + "   bottom=" + bottom + "    radius=" + radius + "    left-right=" + (left - right) + "  top- bottom=" + (top - bottom));
+//            canvas.clipRect(mRectF);
             canvas.drawRoundRect(mRectF, radius, radius, mPaint);
             //设置Xfermode
             mPaint.setXfermode(xfermode);
-
             //源图
             canvas.drawBitmap(src, 0, 0, mPaint);
-
             //还原Xfermode
             mPaint.setXfermode(null);
+
         }
     }
 
-    public void startAnimation(int fromX, int toX, int fromY, int toY, int fromRadius, int toRadius, Bitmap bitmap) {
+    private int width;
+
+
+    public void startAnimation(int fromX, int toX, int fromY, int toY, int fromRadius, int toRadius, Bitmap bitmap, int width) {
+        this.width = width;
         src = bitmap;
         //默认不执行onDraw方法
+
+        Log.i("radius","getBottom="+getBottom()+"   getHeight="+getHeight());
 
         ValueAnimator valueAnimator = new ValueAnimator();
         valueAnimator.setObjectValues(new ScaleCircleAnimation(fromX, fromY, fromRadius),
@@ -95,7 +103,7 @@ public class ScaleCircleImageView extends AppCompatImageView {
                 return new ScaleCircleAnimation(x, y, radius);
             }
         });
-        valueAnimator.setDuration(500);
+        valueAnimator.setDuration(5000);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
