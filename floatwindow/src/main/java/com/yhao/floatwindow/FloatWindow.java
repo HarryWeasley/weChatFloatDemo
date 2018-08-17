@@ -80,7 +80,7 @@ public class FloatWindow {
         int mSlideRightMargin;
         long mDuration = 300;
         TimeInterpolator mInterpolator;
-        private String mTag = mDefaultTag;
+        public String mTag = mDefaultTag;
         boolean mDesktopShow;
         PermissionListener mPermissionListener;
         ViewStateListener mViewStateListener;

@@ -1,26 +1,19 @@
 package com.yhao.floatwindow;
 
 import android.content.Context;
-import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.os.Build;
-import android.provider.Settings;
-import android.support.annotation.RequiresApi;
-import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-
-import java.lang.reflect.Method;
 
 /**
  * Created by yhao on 2017/12/22.
  * https://github.com/yhaolpz
  */
 
-class Util {
+public class Util {
 
 
     static View inflate(Context applicationContext, int layoutId) {
@@ -30,7 +23,7 @@ class Util {
 
     private static Point sPoint;
 
-    static int getScreenWidth(Context context) {
+    public static int getScreenWidth(Context context) {
         if (sPoint == null) {
             sPoint = new Point();
             WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);

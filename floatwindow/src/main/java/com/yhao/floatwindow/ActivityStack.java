@@ -41,4 +41,8 @@ public class ActivityStack {
     public int getSize(){
         return activityVector.size();
     }
+
+    public Activity getTopActivity(){
+        return activityVector.elementAt(getSize()-1);
+    }
 }

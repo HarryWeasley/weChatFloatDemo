@@ -104,7 +104,7 @@ public class ScaleCircleImageView extends AppCompatImageView {
                 return new ScaleCircleAnimation(leftX, rightX, topY, bottomY, radius);
             }
         });
-        valueAnimator.setDuration(5000);
+        valueAnimator.setDuration(500);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {

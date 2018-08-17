@@ -8,18 +8,13 @@ import android.animation.TimeInterpolator;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.graphics.MaskFilter;
 import android.graphics.RectF;
 import android.os.Build;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.TranslateAnimation;
 
 /**
  * Created by yhao on 2017/12/22.
@@ -69,27 +64,35 @@ public class IFloatWindowImpl extends IFloatWindow {
         mFloatView.setSize(mB.mWidth, mB.mHeight);
         mFloatView.setGravity(mB.gravity, mB.xOffset, mB.yOffset);
         mFloatView.setView(mB.mView);
-        mFloatLifecycle = new FloatLifecycle(mB.mApplicationContext, mB.mShow, mB.mActivities, new LifecycleListener() {
-            @Override
-            public void onShow() {
-                show();
-            }
+        if(mB.mTag.equals("old")){
+            mFloatLifecycle = new FloatLifecycle(mB.mApplicationContext, mB.mShow, mB.mActivities, new LifecycleListener() {
+                @Override
+                public void onShow() {
+                    show();
+                }
 
-            @Override
-            public void onHide() {
-                hide();
-            }
-
-            @Override
-            public void onBackToDesktop() {
-                if (!mB.mDesktopShow) {
+                @Override
+                public void onHide() {
                     hide();
                 }
-                if (mB.mViewStateListener != null) {
-                    mB.mViewStateListener.onBackToDesktop();
+
+                @Override
+                public void onBackToDesktop() {
+                    if (!mB.mDesktopShow) {
+                        hide();
+                    }
+                    if (mB.mViewStateListener != null) {
+                        mB.mViewStateListener.onBackToDesktop();
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            mFloatView.init();
+            once = false;
+            isShow = true;
+            getView().setVisibility(View.INVISIBLE);
+        }
+
 
 
     }
@@ -114,6 +117,7 @@ public class IFloatWindowImpl extends IFloatWindow {
 
     @Override
     public void show() {
+        LogUtil.e(mB.mTag);
         if (once) {
             mFloatView.init();
             once = false;
@@ -411,6 +415,7 @@ public class IFloatWindowImpl extends IFloatWindow {
                                 changeY = event.getRawY() - lastY;
                                 newX = (int) (mFloatView.getX() + changeX);
                                 newY = (int) (mFloatView.getY() + changeY);
+
                                 mFloatView.updateXY(newX, newY);
                                 if (mB.mViewStateListener != null) {
 //                                    mB.mViewStateListener.onPositionUpdate(newX, newY);
@@ -444,7 +449,7 @@ public class IFloatWindowImpl extends IFloatWindow {
                                                 Util.getScreenWidth(mB.mApplicationContext) - v.getWidth() - mB.mSlideRightMargin :
                                                 mB.mSlideLeftMargin;
                                         mB.xOffset = endX;
-                                        mB.yOffset = (int) upY;
+                                        mB.yOffset = newY;
                                         mAnimator = ObjectAnimator.ofInt(startX, endX);
                                         mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                                             @Override
@@ -534,7 +539,6 @@ public class IFloatWindowImpl extends IFloatWindow {
 
                             IFloatWindow cancelWindow = FloatWindow.get("cancel2");
                             if (cancelWindow != null) {
-                                Log.i("floatWindow", "隐藏view");
                                 cancelWindow.hideCancel(true);
                             }
                         }
