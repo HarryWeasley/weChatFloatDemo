@@ -82,6 +82,7 @@ public class FloatWindow {
         TimeInterpolator mInterpolator;
         public String mTag = mDefaultTag;
         boolean mDesktopShow;
+        public int parentHeight;
         PermissionListener mPermissionListener;
         ViewStateListener mViewStateListener;
 
@@ -136,6 +137,11 @@ public class FloatWindow {
 
         public B setY(int y) {
             yOffset = y;
+            return this;
+        }
+
+        public B setParentHeight(int parentHeight){
+            this.parentHeight=parentHeight;
             return this;
         }
 

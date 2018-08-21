@@ -16,9 +16,8 @@ public class MoveType {
     public static final int active = 2;
     public static final int slide = 3;
     public static final int back = 4;
-    public static final int slide2 = 5;
 
-    @IntDef({fixed, inactive, active, slide, back, slide2})
+    @IntDef({fixed, inactive, active, slide, back})
     @Retention(RetentionPolicy.SOURCE)
     @interface MOVE_TYPE {
     }

@@ -14,7 +14,6 @@ public abstract class IFloatWindow {
 
     public abstract void showCancelBig();
 
-    public abstract void showFloat();
 
     public abstract void hideCancel(boolean isBig);
 

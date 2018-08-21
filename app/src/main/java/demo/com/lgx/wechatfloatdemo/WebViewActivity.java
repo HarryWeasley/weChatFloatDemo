@@ -128,11 +128,11 @@ public class WebViewActivity extends BaseActivity {
                         .setHeight(75)
                         .setX(Screen.width, 0.8f)  //设置控件初始位置
                         .setY(parent.getHeight() / 3)
+                        .setParentHeight(parent.getHeight())
                         .setMoveStyle(300, new AccelerateInterpolator())
                         .setDesktopShow(false)
                         .build();
                 old = FloatWindow.get("old");
-                //创建当前视图的bitmap
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

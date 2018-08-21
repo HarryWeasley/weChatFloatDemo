@@ -8,7 +8,6 @@ import android.animation.TimeInterpolator;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.graphics.RectF;
 import android.os.Build;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
@@ -37,18 +36,16 @@ public class IFloatWindowImpl extends IFloatWindow {
     private float upY;
     private boolean mClick = false;
     private int mSlop;
+    //消失view的x和y坐标
     private int xCancelOffset, yCancelOffset;
+    //屏幕右下角的x\y坐标
     private int xCoordinate, yCoordinate;
-    private RectF cancelRectF;
-    private float upX2;
-    private float upY2;
-    private boolean hideForever;
-
-    private IFloatWindowImpl() {
-
-    }
+    //屏幕高度，总视图的高度
+    private int screenWidth, parentHeight;
 
     IFloatWindowImpl(FloatWindow.B b) {
+        screenWidth = Util.getScreenWidth(b.mApplicationContext) - b.mWidth;
+        parentHeight = b.parentHeight - b.mHeight;
         mB = b;
         if (mB.mMoveType == MoveType.fixed) {
             //7.0 以下采用自定义 toast, 7.1 及以上引导用户申请权限
@@ -64,7 +61,7 @@ public class IFloatWindowImpl extends IFloatWindow {
         mFloatView.setSize(mB.mWidth, mB.mHeight);
         mFloatView.setGravity(mB.gravity, mB.xOffset, mB.yOffset);
         mFloatView.setView(mB.mView);
-        if(mB.mTag.equals("old")){
+        if (mB.mTag.equals("old")) {
             mFloatLifecycle = new FloatLifecycle(mB.mApplicationContext, mB.mShow, mB.mActivities, new LifecycleListener() {
                 @Override
                 public void onShow() {
@@ -86,13 +83,11 @@ public class IFloatWindowImpl extends IFloatWindow {
                     }
                 }
             });
-        }else{
+        } else {
             mFloatView.init();
             once = false;
-            isShow = true;
             getView().setVisibility(View.INVISIBLE);
         }
-
 
 
     }
@@ -136,14 +131,14 @@ public class IFloatWindowImpl extends IFloatWindow {
 //        if(oldWindow!=null){
 //            oldWindow.hide();
 //        }
-        IFloatWindow cancelWindow = FloatWindow.get("cancel");
-        if (cancelWindow != null) {
-            cancelWindow.hide();
-        }
-        IFloatWindow cancelWindow2 = FloatWindow.get("cancel2");
-        if (cancelWindow2 != null) {
-            cancelWindow2.hide();
-        }
+//        IFloatWindow cancelWindow = FloatWindow.get("cancel");
+//        if (cancelWindow != null) {
+//            cancelWindow.hide();
+//        }
+//        IFloatWindow cancelWindow2 = FloatWindow.get("cancel2");
+//        if (cancelWindow2 != null) {
+//            cancelWindow2.hide();
+//        }
 
     }
 
@@ -194,31 +189,6 @@ public class IFloatWindowImpl extends IFloatWindow {
         }
     }
 
-    @Override
-    public void showFloat() {
-        if (once) {
-            mFloatView.init();
-            once = false;
-            isShow = true;
-        } else {
-            if (isShow) {
-                return;
-            }
-            getView().setVisibility(View.VISIBLE);
-            isShow = true;
-        }
-        if (mB.mViewStateListener != null) {
-            mB.mViewStateListener.onShow();
-        }
-        IFloatWindow cancelWindow = FloatWindow.get("cancel");
-        if (cancelWindow != null) {
-            cancelWindow.hide();
-        }
-        IFloatWindow cancelWindow2 = FloatWindow.get("cancel2");
-        if (cancelWindow2 != null) {
-            cancelWindow2.hide();
-        }
-    }
 
     @Override
     public void hideCancel(boolean isBig) {
@@ -416,6 +386,18 @@ public class IFloatWindowImpl extends IFloatWindow {
                                 newX = (int) (mFloatView.getX() + changeX);
                                 newY = (int) (mFloatView.getY() + changeY);
 
+                                if (newX <= 0) {
+                                    newX = 0;
+                                }
+                                if (newX >= screenWidth) {
+                                    newX = screenWidth;
+                                }
+                                if (newY <= 0) {
+                                    newY = 0;
+                                }
+                                if (newY >= parentHeight) {
+                                    newY = parentHeight;
+                                }
                                 mFloatView.updateXY(newX, newY);
                                 if (mB.mViewStateListener != null) {
 //                                    mB.mViewStateListener.onPositionUpdate(newX, newY);
@@ -439,8 +421,6 @@ public class IFloatWindowImpl extends IFloatWindow {
                             case MotionEvent.ACTION_UP:
                                 upX = event.getRawX();
                                 upY = event.getRawY();
-                                upX2 = event.getX();
-                                upY2 = event.getY();
                                 mClick = (Math.abs(upX - downX) > mSlop) || (Math.abs(upY - downY) > mSlop);
                                 switch (mB.mMoveType) {
                                     case MoveType.slide:
