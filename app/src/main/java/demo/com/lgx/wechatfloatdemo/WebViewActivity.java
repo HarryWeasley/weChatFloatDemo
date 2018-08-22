@@ -34,7 +34,7 @@ public class WebViewActivity extends BaseActivity {
     private ProgressBar progressBar;
     private String url = "https://blog.csdn.net/HarryWeasley/article/details/73692467";
     //    private String url = "https://www.baidu.com";
-    private ScaleCircleImageView frameLayout;
+    private ScaleCircleImageView myImageView;
     private SpecificPositionWebView webView;
     private FrameLayout parent;
 
@@ -42,7 +42,7 @@ public class WebViewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
-        frameLayout = findViewById(R.id.parent);
+        myImageView = findViewById(R.id.image_view);
         progressBar = findViewById(R.id.progress);
         webView = findViewById(R.id.web_view);
         parent = findViewById(R.id.frame_layout);
@@ -94,8 +94,6 @@ public class WebViewActivity extends BaseActivity {
                             .setTag("cancel2")
                             .setView(R.layout.layout_window)
                             .setCancelParam2(320)
-//                .setFilter(true, RNActivity.class)
-//                        .setPermissionListener(permissionListener)
                             .setMoveType(MoveType.inactive, 0, 0)
                             .setDesktopShow(false)
                             .build();
@@ -105,7 +103,6 @@ public class WebViewActivity extends BaseActivity {
                     FloatWindow
                             .with(getApplicationContext())
                             .setTag("cancel")
-//                        .setPermissionListener(permissionListener)
                             .setView(R.layout.layout_window)
                             .setCancelParam2(300)
                             .setMoveType(MoveType.inactive, 0, 0)
@@ -120,8 +117,6 @@ public class WebViewActivity extends BaseActivity {
                         .with(getApplicationContext())
                         .setTag("old")
                         .setView(imageView)
-//                .setWidth(Screen.width, 0.2f) //设置悬浮控件宽高
-//                .setHeight(Screen.width, 0.2f)
                         .setMoveType(MoveType.slide, 0, 0)
                         .setWidth(75)
                         .setFilter(false, WebViewActivity.class)
@@ -158,7 +153,7 @@ public class WebViewActivity extends BaseActivity {
         Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);
-        frameLayout
+        myImageView
                 .createAnmiationParam()
                 .setFromLeftX(0)
                 .setToLeftX(old.getmB().xOffset)
@@ -170,9 +165,9 @@ public class WebViewActivity extends BaseActivity {
                 .setFromRadius(0)
                 .setToRadius(old.getmB().mWidth / 2)
                 .setToBottomY(old.getmB().yOffset + old.getmB().mWidth);
-        frameLayout.startAnimation(bitmap, old.getmB().mWidth);
+        myImageView.startAnimation(bitmap, old.getmB().mWidth);
         webView.setVisibility(View.GONE);
-        frameLayout.setScaleCircleListener(new ScaleCircleImageView.ScaleCircleListener() {
+        myImageView.setScaleCircleListener(new ScaleCircleImageView.ScaleCircleListener() {
             @Override
             public void onAnimationEnd() {
                 finish();
@@ -191,7 +186,7 @@ public class WebViewActivity extends BaseActivity {
         int mWidth = Util.dp2px(this, 75);
         int xOffset = Util.getScreenWidth(this)-mWidth;
         int yOffset = parent.getHeight() / 3;
-        frameLayout
+        myImageView
                 .createAnmiationParam()
                 .setFromLeftX(0)
                 .setToLeftX(xOffset)
@@ -203,9 +198,9 @@ public class WebViewActivity extends BaseActivity {
                 .setFromRadius(0)
                 .setToRadius(mWidth / 2)
                 .setToBottomY(yOffset + mWidth);
-        frameLayout.startAnimation(bitmap, mWidth);
+        myImageView.startAnimation(bitmap, mWidth);
         webView.setVisibility(View.GONE);
-        frameLayout.setScaleCircleListener(new ScaleCircleImageView.ScaleCircleListener() {
+        myImageView.setScaleCircleListener(new ScaleCircleImageView.ScaleCircleListener() {
             @Override
             public void onAnimationEnd() {
                 MyApplication.getMyApplication().setBackNoPermission(true);

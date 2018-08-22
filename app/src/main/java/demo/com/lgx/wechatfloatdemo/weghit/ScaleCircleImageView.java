@@ -88,8 +88,6 @@ public class ScaleCircleImageView extends AppCompatImageView {
         }
         this.width = width;
         src = bitmap;
-        //默认不执行onDraw方法
-
         ValueAnimator valueAnimator = new ValueAnimator();
         valueAnimator.setObjectValues(new ScaleCircleAnimation(animationParam.fromLeftX, animationParam.fromRightX, animationParam.fromTopY, animationParam.fromBottomY, animationParam.fromRadius),
                 new ScaleCircleAnimation(animationParam.toLeftX, animationParam.toRightX, animationParam.toTopY, animationParam.toBottomY, animationParam.toRadius));
