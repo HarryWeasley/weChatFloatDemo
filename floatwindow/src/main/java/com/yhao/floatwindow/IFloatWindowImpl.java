@@ -49,12 +49,14 @@ public class IFloatWindowImpl extends IFloatWindow {
         mB = b;
         if (mB.mMoveType == MoveType.fixed) {
             //7.0 以下采用自定义 toast, 7.1 及以上引导用户申请权限
+            //这里的代码不执行，因为没有用MoveType.fixed
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
                 mFloatView = new FloatPhone(b.mApplicationContext, mB.mPermissionListener);
             } else {
                 mFloatView = new FloatToast(b.mApplicationContext);
             }
         } else {
+            //都是执行的这里的代码，记住
             mFloatView = new FloatPhone(b.mApplicationContext, mB.mPermissionListener);
             initTouchEvent();
         }

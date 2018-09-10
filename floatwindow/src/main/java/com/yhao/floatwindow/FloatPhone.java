@@ -55,15 +55,6 @@ class FloatPhone extends FloatView {
 
     @Override
     public void init() {
-//            try {
-//                mLayoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
-//                mWindowManager.addView(mView, mLayoutParams);
-//            } catch (Exception e) {
-//                mWindowManager.removeView(mView);
-//                LogUtil.e("TYPE_TOAST 失败");
-////            req();
-//            }
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             req();
         } else if (Miui.rom()) {

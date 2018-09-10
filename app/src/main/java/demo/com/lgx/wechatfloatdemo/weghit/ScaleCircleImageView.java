@@ -58,8 +58,6 @@ public class ScaleCircleImageView extends AppCompatImageView {
             xfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
         }
         if (scaleCircleAnimation != null) {
-//            setLayerType(LAYER_TYPE_SOFTWARE, null); //关闭硬件加速
-
             int left = scaleCircleAnimation.getLeftX();
             int top = scaleCircleAnimation.getTopY();
             int right = scaleCircleAnimation.getRightX();

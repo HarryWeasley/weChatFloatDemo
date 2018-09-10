@@ -1,16 +1,13 @@
 package com.yhao.floatwindow;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,124 +84,11 @@ public class FloatActivity extends Activity {
                 context.startActivity(intent);
             }
             mPermissionListenerList.add(permissionListener);
-
-
-//            new AlertDialog.Builder(context)
-//                    .setCancelable(false)
-//                    .setMessage("应用需要获取悬浮窗权限，是否要开启")
-//                    .setPositiveButton("开启", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialogInterface, int i) {
-//                            if (mPermissionListenerList == null) {
-//                                mPermissionListenerList = new ArrayList<>();
-//                                mPermissionListener = new PermissionListener() {
-//                                    @Override
-//                                    public void onSuccess() {
-//                                        for (PermissionListener listener : mPermissionListenerList) {
-//                                            listener.onSuccess();
-//                                        }
-//                                        mPermissionListenerList.clear();
-//                                    }
-//
-//                                    @Override
-//                                    public void onFail() {
-//                                        for (PermissionListener listener : mPermissionListenerList) {
-//                                            listener.onFail();
-//                                        }
-//                                        mPermissionListenerList.clear();
-//                                    }
-//                                };
-//                                Intent intent = new Intent(context, FloatActivity.class);
-//                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                context.startActivity(intent);
-//                            }
-//                            mPermissionListenerList.add(permissionListener);
-//                        }
-//                    }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
-//                    for (PermissionListener listener : mPermissionListenerList) {
-//                        listener.onFail();
-//                    }
-//                    mPermissionListenerList.clear();
-//                }
-//            });
         }
 
     }
 
 
-    public static synchronized void request2(final Context context, final PermissionListener permissionListener) {
-        if (PermissionUtil.hasPermission(context)) {
-            permissionListener.onSuccess();
-        } else {
-         mPermissionListener= new PermissionListener() {
-                    @Override
-                    public void onSuccess() {
-//                        for (PermissionListener listener : mPermissionListenerList) {
-//                            listener.onSuccess();
-//                        }
-//                        mPermissionListenerList.clear();
-                        permissionListener.onSuccess();
-                    }
-
-                    @Override
-                    public void onFail() {
-//                        for (PermissionListener listener : mPermissionListenerList) {
-//                            listener.onFail();
-//                        }
-//                        mPermissionListenerList.clear();
-                        permissionListener.onFail();
-                    }
-                };
-                Intent intent = new Intent(context, FloatActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-
-
-//            new AlertDialog.Builder(context)
-//                    .setCancelable(false)
-//                    .setMessage("应用需要获取悬浮窗权限，是否要开启")
-//                    .setPositiveButton("开启", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialogInterface, int i) {
-//                            if (mPermissionListenerList == null) {
-//                                mPermissionListenerList = new ArrayList<>();
-//                                mPermissionListener = new PermissionListener() {
-//                                    @Override
-//                                    public void onSuccess() {
-//                                        for (PermissionListener listener : mPermissionListenerList) {
-//                                            listener.onSuccess();
-//                                        }
-//                                        mPermissionListenerList.clear();
-//                                    }
-//
-//                                    @Override
-//                                    public void onFail() {
-//                                        for (PermissionListener listener : mPermissionListenerList) {
-//                                            listener.onFail();
-//                                        }
-//                                        mPermissionListenerList.clear();
-//                                    }
-//                                };
-//                                Intent intent = new Intent(context, FloatActivity.class);
-//                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                context.startActivity(intent);
-//                            }
-//                            mPermissionListenerList.add(permissionListener);
-//                        }
-//                    }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialogInterface, int i) {
-//                    for (PermissionListener listener : mPermissionListenerList) {
-//                        listener.onFail();
-//                    }
-//                    mPermissionListenerList.clear();
-//                }
-//            });
-        }
-
-    }
 
 
 }
