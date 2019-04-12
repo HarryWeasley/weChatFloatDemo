@@ -14,6 +14,7 @@ import android.graphics.RectF;
 import android.graphics.Xfermode;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.view.View;
 
 /**
  * Created by Harry on 2018/8/9.
@@ -115,19 +116,20 @@ public class ScaleCircleImageView extends AppCompatImageView {
                 super.onAnimationEnd(animation);
                 if (listener != null) {
                     listener.onAnimationEnd();
+                    setVisibility(View.GONE);
                 }
             }
         });
     }
 
-    private  AnimationParam animationParam;
+    private AnimationParam animationParam;
 
-    public  AnimationParam createAnmiationParam() {
+    public AnimationParam createAnmiationParam() {
         return animationParam = new AnimationParam();
     }
 
 
-    public  class AnimationParam {
+    public class AnimationParam {
         int fromLeftX;
         int fromRightX;
         int toLeftX;
