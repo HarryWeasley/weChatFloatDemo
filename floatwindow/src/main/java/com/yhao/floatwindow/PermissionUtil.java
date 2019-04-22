@@ -20,6 +20,11 @@ import java.lang.reflect.Method;
 public class PermissionUtil {
 
     public static boolean hasPermission(Context context) {
+        if (context == null) return false;
+        //针对8.0官方bug:在用户授予权限后Settings.canDrawOverlays或checkOp方法判断仍然返回false
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
+            return hasPermissionForO(context);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return Settings.canDrawOverlays(context);
         } else {
